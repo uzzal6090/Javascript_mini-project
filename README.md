@@ -1,7 +1,6 @@
+##Advanced Countdown Timer ⏳
 
-
-             Advanced Countdown Timer ⏳
-
+  
 An interactive and feature-rich Countdown Timer built using HTML, CSS, and JavaScript.
 This project demonstrates the practical use of:
 
