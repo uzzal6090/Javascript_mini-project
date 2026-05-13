@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Countdown Timer</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            text-align: center;
+            margin-top: 80px;
+            background: #f4f4f4;
+        }
+
+        h1{
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        input{
+            padding: 10px;
+            width: 120px;
+            font-size: 18px;
+        }
+
+        button{
+            padding: 12px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .start{
+            background: green;
+            color: white;
+        }
+
+        .pause{
+            background: orange;
+            color: white;
+        }
+
+        .stop{
+            background: red;
+            color: white;
+        }
+
+        .reset{
+            background: blue;
+            color: white;
+        }
+
+        .progress-container{
+            width: 400px;
+            height: 30px;
+            background: #ddd;
+            margin: 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar{
+            height: 100%;
+            width: 100%;
+            background: green;
+            transition: 1s linear;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <h2>Advanced Countdown Timer ⏳</h2>
+
+    <input type="number" id="inputTime" placeholder="Enter seconds">
+
+    <br><br>
+
+    <h1 id="count">0</h1>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Buttons -->
+    <button class="start" onclick="startTimer()">Start</button>
+
+    <button class="pause" onclick="pauseTimer()">Pause</button>
+
+    <button class="stop" onclick="stopTimer()">Stop</button>
+
+    <button class="reset" onclick="resetTimer()">Reset</button>
+
+    <script>
+
+        let count;
+        let timer;
+        let originalTime;
+
+        // Start Timer
+        function startTimer(){
+
+            // যদি প্রথমবার start হয়
+            if(count === undefined || count <= 0){
+
+                count = parseInt(document.getElementById("inputTime").value);
+
+                originalTime = count;
+
+            }
+
+            // input empty হলে
+            if(isNaN(count) || count <= 0){
+
+                alert("Please enter valid seconds");
+
+                return;
+            }
+
+            clearInterval(timer);
+
+            timer = setInterval(() => {
+
+                document.getElementById("count").innerHTML = count;
+
+                // Progress Bar Update
+                let progressWidth = (count / originalTime) * 100;
+
+                document.getElementById("progressBar").style.width =
+                    progressWidth + "%";
+
+                count--;
+
+                // Timer End
+                if(count < 0){
+
+                    clearInterval(timer);
+
+                    document.getElementById("count").innerHTML =
+                        "Time Over 🔥";
+
+                    document.getElementById("progressBar").style.width =
+                        "0%";
+
+                    // Sound
+                    let sound = new Audio(
+                        "https://www.soundjay.com/buttons/sounds/beep-07.mp3"
+                    );
+
+                    sound.play();
+
+                    alert("Timer Finished!");
+
+                }
+
+            }, 1000);
+
+        }
+
+        // Pause Timer
+        function pauseTimer(){
+
+            clearInterval(timer);
+
+        }
+
+        // Stop Timer
+        function stopTimer(){
+
+            clearInterval(timer);
+
+            count = 0;
+
+            document.getElementById("count").innerHTML = count;
+
+            document.getElementById("progressBar").style.width = "0%";
+
+        }
+
+        // Reset Timer
+        function resetTimer(){
+
+            clearInterval(timer);
+
+            count = originalTime;
+
+            document.getElementById("count").innerHTML = count;
+
+            document.getElementById("progressBar").style.width = "100%";
+
+        }
+
+    </script>
+
+</body>
+</html>
